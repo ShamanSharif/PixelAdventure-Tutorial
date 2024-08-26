@@ -15,15 +15,15 @@ class Player extends SpriteAnimationGroupComponent
   Player({super.position, this.character = "Virtual-Guy"});
 
   // Animation Related Variables
-  late final SpriteAnimation idleAnimaiton;
-  late final SpriteAnimation runningAnimaiton;
-  final double stepTime = 0.05;
-  var isFacingRight = true;
+  late final SpriteAnimation _idleAnimaiton;
+  late final SpriteAnimation _runningAnimaiton;
+  final double _stepTime = 0.05;
+  var _isFacingRight = true;
 
   // Movement Related Variables
   var playerDirection = PlayerDirection.none;
-  var moveSpeed = 100.0;
-  var velocity = Vector2.zero();
+  final _moveSpeed = 100.0;
+  var _velocity = Vector2.zero();
 
   @override
   FutureOr<void> onLoad() {
@@ -58,14 +58,14 @@ class Player extends SpriteAnimationGroupComponent
 
   // Private Methods
 
-  _loadAllAnimations() {
-    idleAnimaiton = _getSpriteAnimation("Idle", 11);
+  void _loadAllAnimations() {
+    _idleAnimaiton = _getSpriteAnimation("Idle", 11);
 
-    runningAnimaiton = _getSpriteAnimation("Run", 12);
+    _runningAnimaiton = _getSpriteAnimation("Run", 12);
 
     animations = {
-      PlayerState.idle: idleAnimaiton,
-      PlayerState.running: runningAnimaiton,
+      PlayerState.idle: _idleAnimaiton,
+      PlayerState.running: _runningAnimaiton,
     };
 
     current = PlayerState.idle;
@@ -76,7 +76,7 @@ class Player extends SpriteAnimationGroupComponent
       game.images.fromCache("Main-Characters/$character/$state-(32x32).png"),
       SpriteAnimationData.sequenced(
         amount: amount,
-        stepTime: stepTime,
+        stepTime: _stepTime,
         textureSize: Vector2.all(32),
       ),
     );
@@ -86,19 +86,19 @@ class Player extends SpriteAnimationGroupComponent
     var dirX = 0.0;
     switch (playerDirection) {
       case PlayerDirection.left:
-        if (isFacingRight) {
+        if (_isFacingRight) {
           flipHorizontallyAroundCenter();
-          isFacingRight = false;
+          _isFacingRight = false;
         }
-        dirX -= moveSpeed;
+        dirX -= _moveSpeed;
         current = PlayerState.running;
         break;
       case PlayerDirection.right:
-        if (!isFacingRight) {
+        if (!_isFacingRight) {
           flipHorizontallyAroundCenter();
-          isFacingRight = true;
+          _isFacingRight = true;
         }
-        dirX += moveSpeed;
+        dirX += _moveSpeed;
         current = PlayerState.running;
         break;
       case PlayerDirection.none:
@@ -108,7 +108,7 @@ class Player extends SpriteAnimationGroupComponent
       default:
         break;
     }
-    velocity = Vector2(dirX, 0);
-    position += velocity * dt;
+    _velocity = Vector2(dirX, 0);
+    position += _velocity * dt;
   }
 }
