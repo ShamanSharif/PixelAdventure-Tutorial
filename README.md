@@ -11,7 +11,7 @@ Following this [playlist from Spellthorn](https://www.youtube.com/playlist?list=
 ## Progress
 - [x] Create the game and place a world
 - [x] Adding a player to the game
-- [ ] Player movement and controls
+- [x] Player movement and controls
 - [ ] Collisions, jumping and gravity (Physics)
 - [ ] Scrolling backgrounds & collecting fruits
 - [ ] Traps!!!
